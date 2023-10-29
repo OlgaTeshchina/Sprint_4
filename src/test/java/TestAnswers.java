@@ -1,22 +1,21 @@
 import org.example.ChromeRule;
-import org.example.FirefoxRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import static org.junit.Assert.assertEquals;
-import page.object.LocatorsQuestions;
+import page.object.LocatorsAnswers;
 
 @RunWith(Parameterized.class)
-public class TestQuestions {
+public class TestAnswers {
     private WebDriver webDriver;
 
     private final String  idQuestion;
     private final String idAnswer;
     private final String result;
 
-    public TestQuestions(String idQuestion, String  idAnswer, String  result) {
+    public TestAnswers(String idQuestion, String  idAnswer, String  result) {
         this.idQuestion = idQuestion;
         this.idAnswer = idAnswer;
         this.result = result;
@@ -44,7 +43,7 @@ public class TestQuestions {
     @Test
     public void AnswersToImportantQuestionsIsCorrect(){
         //LocatorsQuestions locatorsQuestions = new LocatorsQuestions(firefoxRule.getWebDriver());
-        LocatorsQuestions locatorsQuestions = new LocatorsQuestions(chromeRule.getWebDriver());
+        LocatorsAnswers locatorsQuestions = new LocatorsAnswers(chromeRule.getWebDriver());
 
         locatorsQuestions
                 .open()

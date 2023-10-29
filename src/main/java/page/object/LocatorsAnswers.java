@@ -3,7 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-public class LocatorsQuestions {
+public class LocatorsAnswers {
     public static final String URL = "https://qa-scooter.praktikum-services.ru/";
     private final WebDriver webDriver;
 
@@ -28,20 +28,20 @@ public class LocatorsQuestions {
     }
 
 
-    public LocatorsQuestions(WebDriver webDriver) {this.webDriver = webDriver; }
+    public LocatorsAnswers(WebDriver webDriver) {this.webDriver = webDriver; }
 
-    public LocatorsQuestions open() {
+    public LocatorsAnswers open() {
         webDriver.get(URL);
         return this;
     }
 
-    public LocatorsQuestions scrollToTheLastQuestionFromQuestionsImportant() {
+    public LocatorsAnswers scrollToTheLastQuestionFromQuestionsImportant() {
         WebElement questionsAboutImportant = webDriver.findElement(LastQuestion);
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", questionsAboutImportant);
         return this;
     }
 
-    public LocatorsQuestions clickOnTheQuestion(String idQuestion) {
+    public LocatorsAnswers clickOnTheQuestion(String idQuestion) {
         this.idQuestion = idQuestion;
         webDriver.findElement(getSomeQuestionLocator()).click();
         return this;
