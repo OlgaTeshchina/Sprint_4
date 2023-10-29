@@ -1,9 +1,6 @@
 package page.object;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,8 +16,10 @@ public class LocatorsOrder {
     private final By buttonCookie = By.xpath(".//button[@id = 'rcc-confirm-button']");
 
     //Кнопки раздела Заказать самокат(общая информация о клиенте: имя, фамилия, адрес, станция метро, номер)
-    //Кнопка Заказать(начать оформление заказа)
+    //Кнопка Заказать из шапки сайта(начать оформление заказа)
     private  final By buttonOrderScooterStart = By.xpath(".//button[@class =  'Button_Button__ra12g' and text() = 'Заказать']");
+    //Кнопка заказать из раздела Как это работает
+    private  final By buttonOrderScooterStartTwo = By.xpath(".//button[@class =  'Button_Button__ra12g' and text() = 'Заказать']");
     //Поле Имя
     private  final  By nameField = By.xpath(".//input[@placeholder = '* Имя']");
     //Поле Фамилия
@@ -81,6 +80,13 @@ public class LocatorsOrder {
 
     public LocatorsOrder clickOnButtonOrderScooterStart(){
         webDriver.findElement(buttonOrderScooterStart).click();
+        return this;
+    }
+
+    public LocatorsOrder clickOnButtonOrderScooterStartTwo(){
+        WebElement buttonStartOrder = webDriver.findElement(buttonOrderScooterStartTwo);
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", buttonStartOrder);
+        webDriver.findElement(buttonOrderScooterStartTwo).click();
         return this;
     }
 
