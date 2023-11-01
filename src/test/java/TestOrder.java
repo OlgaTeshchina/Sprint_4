@@ -35,8 +35,8 @@ public class TestOrder {
 
     }
 
-     @Rule
-      public FirefoxRule firefoxRule = new FirefoxRule();
+    // @Rule
+     //public FirefoxRule firefoxRule = new FirefoxRule();
     @Rule
     public ChromeRule chromeRule = new ChromeRule();
 
