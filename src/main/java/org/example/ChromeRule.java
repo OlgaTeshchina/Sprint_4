@@ -2,18 +2,19 @@ package org.example;
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ChromeRule extends ExternalResource  {
     private WebDriver webDriver;
-
     public WebDriver getWebDriver() {
         return webDriver;
     }
 
     @Override
     protected void before() {
-        System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\bin\\chromedriver-win64\\chromedriver.exe");
-        webDriver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        webDriver = new ChromeDriver(options);
     }
 
     @Override

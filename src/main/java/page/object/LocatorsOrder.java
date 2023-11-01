@@ -4,12 +4,12 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
+import static org.example.UrlHomePage.URL;
 import static org.hamcrest.CoreMatchers.containsString;
 
 public class LocatorsOrder {
-
-    public static final String URL = "https://qa-scooter.praktikum-services.ru/";
-
     private WebDriver webDriver;
 
     //Кнопка принятия кук
@@ -18,7 +18,7 @@ public class LocatorsOrder {
     //Кнопки раздела Заказать самокат(общая информация о клиенте: имя, фамилия, адрес, станция метро, номер)
     //Кнопка Заказать из шапки сайта(начать оформление заказа)
     private  final By buttonOrderScooterStart = By.xpath(".//button[@class =  'Button_Button__ra12g' and text() = 'Заказать']");
-    //Кнопка заказать из раздела Как это работает
+    //Кнопка Заказать из раздела Как это работает
     private  final By buttonOrderScooterStartTwo = By.xpath(".//button[@class =  'Button_Button__ra12g' and text() = 'Заказать']");
     //Поле Имя
     private  final  By nameField = By.xpath(".//input[@placeholder = '* Имя']");
@@ -39,14 +39,16 @@ public class LocatorsOrder {
     private  final By deliveryDateField = By.xpath(".//input[@placeholder = '* Когда привезти самокат']");
     //Область календаря
     private final  By calendarDelivery = By.xpath(".//div[@class = 'react-datepicker']");
+    //Выбранная дата из календаря
+    final By dateFromCalendar = By.xpath(".//div[contains(@aria-label, '5-е ноября 2023 г.')]");
     //Поле(выпадающий список) Срок аренды
     private  final  By rentalPeriodField = By.xpath(".//div[@class = 'Dropdown-placeholder']");
+    //Выбранный из списка период аренды
+    final By periodFromMenu = By.xpath(".//div[@class =  'Dropdown-option' and text() = 'трое суток'] ");
     //Меню выбора периода аренды
     private  final By rentalPeriodMenu = By.xpath(".//div[@class = 'Dropdown-menu']");
     //Чек бокс Цвет самоката черный
     private  final  By checkBoxBlackColor = By.xpath(".//input[@id = 'black']");
-    //Чек бокс Цвет самоката серый
-    private  final  By checkBoxGrayColor = By.xpath(".//input[@id = 'grey']");
     //Поле Комментарий для курьера
     private  final By commentFieldForCourier = By.xpath(".//input[@placeholder = '* Когда привезти самокат']");
     //Кнопка Заказать(завершение оформления заказа)
@@ -91,7 +93,7 @@ public class LocatorsOrder {
     }
 
     public LocatorsOrder setNameField(String name){
-        WebDriverWait wait = new WebDriverWait(webDriver, 4);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(4));
         wait.until(ExpectedConditions.presenceOfElementLocated(nameField));
         webDriver.findElement(nameField).sendKeys(name);
         return this;
@@ -122,8 +124,8 @@ public class LocatorsOrder {
     }
 
     public LocatorsOrder clickContinueButton(){
-        new WebDriverWait(webDriver, 3)
-               .until(ExpectedConditions.visibilityOf(webDriver.findElement(continueButton)));
+        new WebDriverWait(webDriver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(webDriver.findElement(continueButton)));
         webDriver.findElement(continueButton).click();
         return this;
     }
@@ -140,30 +142,23 @@ public class LocatorsOrder {
 
 
     //Методы раздела Про аренду
-    public LocatorsOrder selectDeliveryDate(String date, String foLocatorDateFromCalendar){
+    public LocatorsOrder selectDeliveryDate(String date){
         webDriver.findElement(deliveryDateField).click();
         webDriver.findElement(deliveryDateField).sendKeys(date);
         webDriver.findElement(calendarDelivery);
-        final By dateFromCalendar = By.xpath(".//div[contains(@aria-label, '"+ foLocatorDateFromCalendar +"')]");
         webDriver.findElement(dateFromCalendar).click();
         return this;
     }
 
-    public LocatorsOrder selectRentalPeriod(String foLocatorPeriodFromMenu){
-      webDriver.findElement(rentalPeriodField).click();
-      webDriver.findElement(rentalPeriodMenu);
-      final By periodFromMenu = By.xpath(".//div[@class =  'Dropdown-option' and text() = '" + foLocatorPeriodFromMenu + "'] ");
-      webDriver.findElement(periodFromMenu).click();
-      return this;
+    public LocatorsOrder selectRentalPeriod(){
+        webDriver.findElement(rentalPeriodField).click();
+        webDriver.findElement(rentalPeriodMenu);
+        webDriver.findElement(periodFromMenu).click();
+        return this;
     }
 
     public LocatorsOrder chooseCheckBoxBlackColor(){
         webDriver.findElement(checkBoxBlackColor).click();
-        return  this;
-    }
-
-    public LocatorsOrder chooseCheckGrayColor(){
-        webDriver.findElement(checkBoxGrayColor).click();
         return  this;
     }
 
@@ -173,12 +168,11 @@ public class LocatorsOrder {
     }
 
     public LocatorsOrder clickButtonOrderScooterFinish(){
-        new WebDriverWait(webDriver, 3)
+        new WebDriverWait(webDriver, Duration.ofSeconds(3))
                 .until(ExpectedConditions.visibilityOf(webDriver.findElement(buttonOrderScooterFinish)));
         webDriver.findElement(buttonOrderScooterFinish).click();
         return this;
     }
-
 
     //Методы всплывающего окна Хотите оформить заказ?
     public LocatorsOrder checkTextWantToPlaceOrder(){
@@ -186,23 +180,24 @@ public class LocatorsOrder {
         return this;
     }
 
-   public LocatorsOrder clickOrderConfirmationButton(){
-       new WebDriverWait(webDriver, 3)
-               .until(ExpectedConditions.visibilityOf(webDriver.findElement(orderConfirmationButton)));
+    public LocatorsOrder clickOrderConfirmationButton(){
+        new WebDriverWait(webDriver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(webDriver.findElement(orderConfirmationButton)));
         webDriver.findElement(orderConfirmationButton).click();
         return this;
-   }
+    }
 
     //Методы всплывающего окна Заказ оформлен
     public LocatorsOrder checkTextOrderIsProcessed(){
-      String textOrder =  webDriver.findElement(textOrderIsProcessed).getText();
+        String textOrder =  webDriver.findElement(textOrderIsProcessed).getText();
         Assert.assertThat(textOrder, containsString("Номер заказа:"));
         Assert.assertThat(textOrder, containsString(".  Запишите его:"));
         Assert.assertThat(textOrder, containsString("пригодится, чтобы отслеживать статус"));
         System.out.println(textOrder);
-    return this;
+        return this;
     }
 }
+
 
 
 

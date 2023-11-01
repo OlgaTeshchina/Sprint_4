@@ -3,56 +3,51 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static org.example.UrlHomePage.URL;
+
 public class LocatorsAnswers {
-    public static final String URL = "https://qa-scooter.praktikum-services.ru/";
     private final WebDriver webDriver;
 
-    //Локаторы раздела Вопросы о важном
-    private String idQuestion;
-    private String idAnswer;
-
-    //Локатор класса последнего вопроса для скролла
-    private final By LastQuestion = By.className("accordion__heading");
-    //Определение вопросов в блоке Вопросы о важном
-    private By someQuestion = By.xpath(".//div[@id = '" + idQuestion + "']");
-
-
-    //Определение ответов в блоке Вопросы о важном
-    private By someAnswer = By.xpath(".//div[@id = '" + idAnswer + "']");
-
-    //Геттеры локаторов
-    private By getSomeQuestionLocator() {return By.xpath(".//div[@id = '" + idQuestion + "']"); }
-    private By getSomeAnswerLocator()
-    {
-        return By.xpath(".//div[@id = '" + idAnswer + "']");
+    //Локатор: определение вопросов в блоке Вопросы о важном
+    private By getQuestionLocator(Integer index) {
+        return By.xpath(String.format(".//div[@id = 'accordion__heading-%d']", index));
     }
+    //Локатор: определение ответов в блоке Вопросы о важном
+    private By getAnswerLocator(Integer index) {
+        return By.xpath(String.format(".//div[@id = 'accordion__panel-%d']", index));
+    }
+    //Локатор класса последнего вопроса для скролла
+    private final By lastQuestion = By.className("accordion__heading");
 
 
+    //Методы для теста ответов блока Вопросы о важном
     public LocatorsAnswers(WebDriver webDriver) {this.webDriver = webDriver; }
 
-    public LocatorsAnswers open() {
-        webDriver.get(URL);
-        return this;
-    }
+    public LocatorsAnswers open() {webDriver.get(URL); return this; }
 
     public LocatorsAnswers scrollToTheLastQuestionFromQuestionsImportant() {
-        WebElement questionsAboutImportant = webDriver.findElement(LastQuestion);
+        WebElement questionsAboutImportant = webDriver.findElement(lastQuestion);
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", questionsAboutImportant);
         return this;
     }
 
-    public LocatorsAnswers clickOnTheQuestion(String idQuestion) {
-        this.idQuestion = idQuestion;
-        webDriver.findElement(getSomeQuestionLocator()).click();
+    public LocatorsAnswers clickOnTheQuestion(Integer index) {
+        webDriver.findElement(getQuestionLocator(index)).click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(4))
+                .until(ExpectedConditions.visibilityOf(webDriver.findElement(getAnswerLocator(index))));
         return this;
     }
 
-    public String getAnswer(String idAnswer) {
-        this.idAnswer = idAnswer;
-        WebElement answerElement = webDriver.findElement(getSomeAnswerLocator());
-        System.out.println(answerElement.getText());
+    public String getAnswer(Integer index) {
+        WebElement answerElement = webDriver.findElement(getAnswerLocator(index));
         return answerElement.getText();
     }
 }
+
 
 
