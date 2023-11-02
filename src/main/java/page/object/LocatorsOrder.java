@@ -67,8 +67,13 @@ public class LocatorsOrder {
     private  final By textOrderIsProcessed = By.xpath(".//div[@class = 'Order_Text__2broi']");
 
 
+    private final By formaWhoIsTheScooterFor = By.xpath(".//div[@class = 'Order_Form__17u6u']");
     //Методы раздела Заказать самокат(общая информация о клиенте: имя, фамилия, адрес, станция метро, номер)
-    public LocatorsOrder(WebDriver webDriver) {this.webDriver = webDriver;}
+    public LocatorsOrder(WebDriver webDriver) {this.webDriver = webDriver; }
+
+    public boolean checkShownFormaWhoIsTheScooterFor() {
+        return !webDriver.findElements(formaWhoIsTheScooterFor).isEmpty();
+    }
 
     public LocatorsOrder open(){
         webDriver.get(URL);
@@ -196,6 +201,7 @@ public class LocatorsOrder {
         System.out.println(textOrder);
         return this;
     }
+
 }
 
 

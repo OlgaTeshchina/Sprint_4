@@ -2,6 +2,7 @@ import org.example.ChromeRule;
 import org.junit.Rule;
 import org.junit.Test;
 import page.object.LocatorsOrder;
+import static org.junit.Assert.assertTrue;
 
 public class TestStartOrderFromSection {
 
@@ -17,7 +18,7 @@ public class TestStartOrderFromSection {
 
         locatorsOrder
                 .open()
-                .clickOnButtonOrderScooterStartTwo();
-
+                .clickOnButtonOrderScooterStartTwo()
+                .checkShownFormaWhoIsTheScooterFor();
     }
 }
